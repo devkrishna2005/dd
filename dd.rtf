@@ -1,0 +1,266 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww29200\viewh18380\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!doctype html>\
+<html lang="en">\
+<head>\
+  <meta charset="utf-8" />\
+  <meta name="viewport" content="width=device-width,initial-scale=1" />\
+  <title>Will you be mine? \uc0\u55357 \u56470 </title>\
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">\
+  <style>\
+    :root\{\
+      --bg1: #ffeef8;\
+      --bg2: #fff4e6;\
+      --accent: #ff6fb5;\
+      --accent2: #ffb6c1;\
+      --card:#ffffffcc;\
+      --glass: rgba(255,255,255,0.6);\
+    \}\
+    html,body\{height:100%;margin:0;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial\}\
+    body\{\
+      background: radial-gradient(circle at 10% 10%,var(--bg1),var(--bg2));\
+      overflow:hidden;\
+      display:flex;align-items:center;justify-content:center;padding:24px\
+    \}\
+\
+    .stage\{position:relative;width:100%;max-width:920px;height:720px;border-radius:28px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.12);background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.5));backdrop-filter: blur(6px);overflow:hidden\}\
+\
+    h1\{font-family:'Great Vibes',cursive;font-size:46px;margin:0;color:#b2005a;text-align:center\}\
+    .subtitle\{color:#8a4661;text-align:center;margin-top:6px;margin-bottom:18px\}\
+\
+    .card\{background:var(--card);border-radius:16px;padding:22px;margin:auto;width:78%;min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative\}\
+\
+    .question\{font-size:22px;margin-bottom:18px;text-align:center;color:#5b2b3b\}\
+    .answers\{display:flex;gap:18px\}\
+    .btn\{padding:12px 22px;border-radius:999px;border:none;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.08);transition:transform .18s ease,box-shadow .18s;color:white\}\
+    .btn:active\{transform:translateY(2px)\}\
+    .yes\{background:linear-gradient(90deg,var(--accent),var(--accent2));\}\
+    .no\{background:#a9a3ff\}\
+\
+    .progress\{position:absolute;left:18px;right:18px;bottom:18px;height:8px;background:linear-gradient(90deg,#ffe6f3, #fff8f0);border-radius:999px;overflow:hidden\}\
+    .progress > i\{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff9acb,#ff6fb5);\}\
+\
+    /* hearts background */\
+    .hearts\{position:absolute;inset:0;pointer-events:none\}\
+    .heart\{position:absolute;width:18px;height:18px;transform:rotate(-45deg);opacity:0.95\}\
+    .heart:before,.heart:after\{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:var(--accent)\}\
+    .heart:before\{top:-9px;left:0\}\
+    .heart:after\{left:9px;top:0\}\
+\
+    /* moving up animation */\
+    @keyframes floatUp\{0%\{transform: translateY(0) rotate(-45deg) scale(1)\}100%\{transform: translateY(-420px) rotate(-45deg) scale(.8);opacity:0\}\}\
+\
+    /* breathing hearts */\
+    .breath\{animation: breath 2.6s ease-in-out infinite;transform-origin:center\}\
+    @keyframes breath\{0%\{transform:scale(1)\}50%\{transform:scale(1.14)\}100%\{transform:scale(1)\}\}\
+\
+    /* sparkles */\
+    .sparkle\{position:absolute;width:6px;height:6px;border-radius:50%;filter:blur(0.6px);opacity:.9\}\
+\
+    /* final modal */\
+    .modal\{position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,240,248,0.95), rgba(255,250,250,0.9));display:flex;align-items:center;justify-content:center;flex-direction:column;padding:28px;backdrop-filter: blur(2px);\}\
+    .modal h2\{font-family:'Great Vibes',cursive;font-size:44px;color:#c4006a;margin:0\}\
+    .modal p\{color:#6b2f44;margin-top:6px\}\
+\
+    /* confetti pieces */\
+    .confetti\{position:absolute;width:10px;height:16px;opacity:.95\}\
+\
+    /* small cute footer */\
+    .small\{font-size:12px;color:#7d4b5f;margin-top:12px\}\
+\
+    @media (max-width:600px)\{.stage\{height:86vh;padding:16px\}.card\{width:92%\}\}\
+  </style>\
+</head>\
+<body>\
+  <div class="stage" id="stage">\
+    <div class="hearts" id="hearts"></div>\
+    <div style="text-align:center">\
+      <h1>Will you be mine?</h1>\
+      <div class="subtitle">A little quiz \'97 answer honestly \uc0\u55357 \u56469 </div>\
+    </div>\
+\
+    <div class="card" id="card">\
+      <div class="question" id="question">Loading...</div>\
+      <div class="answers" id="answers"></div>\
+      <div class="progress" aria-hidden="true"><i id="bar"></i></div>\
+      <div class="small">Made with \uc0\u9829 \u65039  for someone special</div>\
+    </div>\
+\
+    <!-- Modal shown after answer yes -->\
+    <div class="modal" id="modal" style="display:none">\
+      <h2>She said YES! \uc0\u55357 \u56470 </h2>\
+      <p>Can't wait to make you smile every day.</p>\
+      <div class="small">Refresh to play again</div>\
+    </div>\
+  </div>\
+\
+  <script>\
+    const stage = document.getElementById('stage');\
+    const heartsWrap = document.getElementById('hearts');\
+    const qEl = document.getElementById('question');\
+    const answersEl = document.getElementById('answers');\
+    const bar = document.getElementById('bar');\
+    const modal = document.getElementById('modal');\
+\
+    const questions = [\
+      "Do you like spending time together?",\
+      "Do you laugh at my silly jokes?",\
+      "Do I make you feel special?",\
+      "Would you like a surprise date?",\
+      "Will you be my Valentine?"\
+    ];\
+\
+    let idx = 0;\
+    function render()\{\
+      qEl.textContent = questions[idx];\
+      answersEl.innerHTML = '';\
+      const yes = document.createElement('button');\
+      yes.className = 'btn yes';\
+      yes.textContent = 'Yes \uc0\u55357 \u56469 ';\
+      yes.onclick = ()=>\{ if(idx===questions.length-1)\{showYes()\} else \{ idx++; updateProgress(); render(); playTinyPop(); \} \};\
+\
+      const no = document.createElement('button');\
+      no.className = 'btn no';\
+      no.textContent = 'No';\
+\
+      // special behavior on 5th question (index 4)\
+      if(idx === questions.length-1)\{\
+        no.addEventListener('mouseenter', runaway);\
+        no.addEventListener('focus', runaway);\
+        no.addEventListener('click', (e)=>\{ e.preventDefault(); runaway(); \});\
+      \} else \{\
+        no.onclick = ()=>\{ idx = Math.max(0, idx-1); updateProgress(); render(); \}\
+      \}\
+\
+      answersEl.appendChild(yes);\
+      answersEl.appendChild(no);\
+    \}\
+\
+    function updateProgress()\{\
+      const pct = Math.round(((idx)/(questions.length-1))*100);\
+      bar.style.width = pct + '%';\
+    \}\
+\
+    function showYes()\{\
+      modal.style.display = 'flex';\
+      spawnConfetti(90);\
+      playCelebrate();\
+    \}\
+\
+    function runaway(e)\{\
+      const card = document.getElementById('card');\
+      const btn = e?.currentTarget || event?.target;\
+      const rect = card.getBoundingClientRect();\
+      const bw = btn.offsetWidth, bh = btn.offsetHeight;\
+      const x = Math.random()*(rect.width - bw - 40) + 20;\
+      const y = Math.random()*(rect.height - bh - 80) + 20;\
+      btn.style.position = 'absolute';\
+      btn.style.left = x + 'px';\
+      btn.style.top = y + 'px';\
+      btn.style.transition = 'left .25s ease, top .25s ease';\
+      playTinySwoosh();\
+      burstHeartsAt(x + bw/2, y + bh/2);\
+    \}\
+\
+    function seedHearts(n=24)\{\
+      for(let i=0;i<n;i++)\{\
+        const h = document.createElement('div');\
+        h.className = 'heart';\
+        const size = Math.random()*22 + 12;\
+        h.style.width = size+'px'; h.style.height = size+'px';\
+        h.style.left = Math.random()*100 + '%';\
+        h.style.top = Math.random()*100 + '%';\
+        h.style.opacity = Math.random()*0.6 + 0.4;\
+        h.innerHTML = `<svg viewBox="0 0 32 29" width="$\{size\}" height="$\{size\}"><path d="M23.6 0c-3.1 0-5.6 2-7.6 4.2C14 2 11.6 0 8.6 0 3.7 0 0 4 0 9.2c0 9.9 16 19.8 16 19.8S32 19.1 32 9.2C32 4 28.3 0 23.6 0z" fill="$\{i%2? '#ff8fc1':'#ff6fb5'\}"></path></svg>`;\
+        const dur = Math.random()*12 + 8;\
+        h.style.animation = `floatUp $\{dur\}s linear infinite`;\
+        heartsWrap.appendChild(h);\
+      \}\
+\
+      for(let j=0;j<6;j++)\{\
+        const b = document.createElement('div');\
+        b.className = 'heart breath';\
+        const size = Math.random()*44 + 28;\
+        b.style.width = size+'px'; b.style.height = size+'px';\
+        b.style.left = (10 + j*12) + '%';\
+        b.style.top = (60 - j*3) + '%';\
+        b.style.opacity = 0.85;\
+        b.innerHTML = `<svg viewBox="0 0 32 29" width="$\{size\}" height="$\{size\}"><path d="M23.6 0c-3.1 0-5.6 2-7.6 4.2C14 2 11.6 0 8.6 0 3.7 0 0 4 0 9.2c0 9.9 16 19.8 16 19.8S32 19.1 32 9.2C32 4 28.3 0 23.6 0z" fill="#ff9ec9"></path></svg>`;\
+        heartsWrap.appendChild(b);\
+      \}\
+    \}\
+\
+    function burstHeartsAt(cx, cy)\{\
+      for(let i=0;i<6;i++)\{\
+        const h = document.createElement('div');\
+        h.className = 'heart';\
+        const size = Math.random()*26 + 12;\
+        h.style.width = size+'px'; h.style.height = size+'px';\
+        h.style.left = (cx + (Math.random()-0.5)*120) + 'px';\
+        h.style.top = (cy + (Math.random()-0.5)*120) + 'px';\
+        h.style.opacity = 1;\
+        h.innerHTML = `<svg viewBox="0 0 32 29" width="$\{size\}" height="$\{size\}"><path d="M23.6 0c-3.1 0-5.6 2-7.6 4.2C14 2 11.6 0 8.6 0 3.7 0 0 4 0 9.2c0 9.9 16 19.8 16 19.8S32 19.1 32 9.2C32 4 28.3 0 23.6 0z" fill="#ff6fb5"></path></svg>`;\
+        heartsWrap.appendChild(h);\
+        h.animate([\
+          \{transform: 'translateY(0) scale(1)', opacity:1\},\
+          \{transform: `translateY(-120px) scale(.6)`, opacity:0\}\
+        ], \{duration: 900 + Math.random()*600, easing: 'ease-out'\}).onfinish = ()=>h.remove();\
+      \}\
+    \}\
+\
+    function spawnConfetti(n=60)\{\
+      for(let i=0;i<n;i++)\{\
+        const c = document.createElement('div');\
+        c.className = 'confetti';\
+        c.style.left = Math.random()*100 + '%';\
+        c.style.top = (Math.random()*20 - 10) + '%';\
+        c.style.background = ['#ffd3e3','#ff9ec9','#fff3b0','#cfe9ff'][Math.floor(Math.random()*4)];\
+        stage.appendChild(c);\
+        c.animate([\
+          \{transform: `translateY(0)`, opacity:1\},\
+          \{transform: `translateY(560px)`, opacity:0\}\
+        ], \{duration: 2000 + Math.random()*1600, easing:'cubic-bezier(.2,.6,.2,1)'\}).onfinish = ()=>c.remove();\
+      \}\
+    \}\
+\
+    let audioCtx;\
+    function playTinyPop()\{\
+      try\{\
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();\
+        const o = audioCtx.createOscillator();\
+        const g = audioCtx.createGain();\
+        o.type = 'sine'; o.frequency.value = 560; g.gain.value = 0.03;\
+        o.connect(g); g.connect(audioCtx.destination);\
+        o.start(); o.stop(audioCtx.currentTime + 0.08);\
+      \}catch(e)\{\}\
+    \}\
+    function playTinySwoosh()\{\
+      try\{\
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();\
+        const o = audioCtx.createOscillator(); const g = audioCtx.createGain();\
+        o.type = 'sawtooth'; o.frequency.value = 380; g.gain.value = 0.02;\
+        o.connect(g); g.connect(audioCtx.destination);\
+        o.start(); o.frequency.exponentialRampToValueAtTime(180, audioCtx.currentTime + 0.18); o.stop(audioCtx.currentTime + 0.22);\
+      \}catch(e)\{\}\
+    \}\
+    function playCelebrate()\{\
+      try\{\
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();\
+        const t = audioCtx.currentTime; const o1 = audioCtx.createOscillator(); const g1=audioCtx.createGain();\
+        o1.type='triangle'; o1.frequency.setValueAtTime(660,t); g1.gain.setValueAtTime(0.02,t);\
+        o1.connect(g1); g1.connect(audioCtx.destination);\
+        o1.start(); o1.frequency.exponentialRampToValueAtTime(300, t+0.6); o1.stop(t+0.7);\
+      \}catch(e)\{\}\
+    \}\
+\
+    seedHearts(28);\
+    render();\
+    updateProgress();\
+  </script>\
+</body>\
+</html>}
